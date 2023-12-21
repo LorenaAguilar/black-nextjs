@@ -7,6 +7,8 @@ interface ApiResponse {
   timestamp: Date;
 }
 
+//É chamada somente na hora do build
+//Por conta disso é melhor para dados que não mudam com frequência
 export const getStaticProps: GetStaticProps = async () => {
   const staticData = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/hello`
@@ -16,6 +18,7 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       staticData,
     },
+    revalidate: 10, //Tempo em segundos para revalidar (regenerar) a página
   };
 };
 
